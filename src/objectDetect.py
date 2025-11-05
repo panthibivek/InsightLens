@@ -9,8 +9,8 @@ import numpy as np
 load_dotenv()
 
 api_key = os.getenv("GOOGLE_API_KEY")
-
-with open("beluww.png", "rb") as f:
+image_file = 'src/data/dog.avif'
+with open(image_file, "rb") as f:
     image_data = f.read()
 
 image_part = types.Part.from_bytes(
@@ -48,7 +48,7 @@ try:
     detections = json.loads(response_text)
     
 
-    img = cv2.imread("beluww.png")
+    img = cv2.imread(image_file)
     height, width = img.shape[:2]
     
     # Draw bounding boxes for each detection
@@ -84,7 +84,7 @@ try:
             font_thickness
         )
     
-    output_filename = "beluww_with_bbox.png"
+    output_filename = "output2.png"
     cv2.imwrite(output_filename, img)
     print(f"\nImage saved as: {output_filename}")
     
