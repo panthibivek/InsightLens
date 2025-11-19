@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Ask Gemini</title>
+</head>
+
+<body>
+    <h2>Ask Gemini (Image)</h2>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="sendImage()">Send Image</button>
+    <p id="imageResponse"></p>
+
+    <script>
+        async function sendImage() {
+            const fileInput = document.getElementById("imageInput");
+            const file = fileInput.files[0];
+            if (!file) return alert("Please choose an image first!");
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await fetch("http://127.0.0.1:8000/ask_image ", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+            document.getElementById("imageResponse").innerText =
+                data.answer || "Error: " + data.error;
+        }
+    </script>
+</body>
+
+</html>
